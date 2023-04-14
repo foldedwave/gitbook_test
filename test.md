@@ -1,6 +1,6 @@
 # Gateway Integration
 
-## About This Guide
+## About This Guide {#about-this-guide .Docs-Heading-2}
 
 This guide provides the information required to integrate with our
 Payment Gateway and gives a very basic example of code for doing so It
@@ -18,7 +18,7 @@ The following terms are used throughout this guide:
 
 **Merchant**
 
-> The Merchant using the Gateway’s services.
+> The Merchant using the Gateway's services.
 
 **Our**
 
@@ -91,7 +91,7 @@ processing to your ecommerce business, using our Hosted Payment Pages
 Cardholder data.
 
 The Hosted Integration method works by redirecting the Customer to our
-Gateway’s Hosted Payment Page, which will collect the Customer’s payment
+Gateway's Hosted Payment Page, which will collect the Customer's payment
 details and process the payment before redirecting the Customer back to
 a page on your website, letting you know the payment outcome. This
 allows you the quickest path to integrating with the Gateway.
@@ -99,7 +99,7 @@ allows you the quickest path to integrating with the Gateway.
 The standard Hosted Payment Page is designed to be shown in a lightbox
 over your website and styled with logos and colours to match.
 Alternatively, you can arrange for fully customised Hosted Payment Pages
-to be produced that can match your website’s style and layout. These
+to be produced that can match your website's style and layout. These
 fully customised pages are usually provided using a browser redirect,
 displaying full-page in the browser, or can be displayed embedded in an
 iframe on your website.
@@ -120,7 +120,7 @@ SDK Guide.
 ### Direct Integration
 
 The Direct Integration works by allowing you to keep the Customer on
-your system throughout the checkout process, collecting the Customer’s
+your system throughout the checkout process, collecting the Customer's
 payment details on your own secure server before sending the collected
 data to our Gateway for processing. This allows you to provide a
 smoother, more complete checkout process to the Customer.
@@ -134,7 +134,7 @@ can provide a more advanced integration with our Gateway.
 The Batch Integration is an enhancement to the Direct Integration,
 allowing you to send multiple transactions in a single request and
 monitor their status. This is useful if you wish to capture multiple
-transactions or collect multiple payments – for example, collecting
+transactions or collect multiple payments -- for example, collecting
 subscription charges or loan repayments.
 
 In addition to basic sales processing, the Batch Integration can be used
@@ -181,7 +181,7 @@ complete a PCI validation form annually.
 
 For more information, please see https://www.pcisecuritystandards.org/
 
-##  Integration Details
+##  Integration Details {#integration-details .unnumbered}
 
 ### HTTP Requests
 
@@ -207,15 +207,15 @@ value.
 ### Hosted HTTP Requests
 
 When using the Hosted Integration, the request must be sent from the
-Customer’s web browser as the response will be a HTML Hosted Payment
-Page (HPP), used to collect the Customer’s details. The format of the
+Customer's web browser as the response will be a HTML Hosted Payment
+Page (HPP), used to collect the Customer's details. The format of the
 request is designed so that it can be sent using a standard HTML form
 with the data in hidden form fields. The browser will then automatically
 encode the request correctly according to
 application/x-www-form-urlencoded format.
 
 When the Hosted Payment Page has been completed and the payment
-processed, the Customer’s browser will be automatically redirected to
+processed, the Customer's browser will be automatically redirected to
 the URL provided via the **redirectURL** field. The response will be
 returned to this page in application/x-www-form-urlencoded format, using
 a HTTP POST request.
@@ -235,7 +235,7 @@ same URL encoded format, unless a **redirectURL** field is provided.
 If a **redirectURL** field is provided, then the response will be a HTML
 page designed to redirect a browser to the URL provided, using a HTTP
 POST request containing the response. This allows you to collect the
-Cardholder’s payment details on your own server, using a HTML form which
+Cardholder's payment details on your own server, using a HTML form which
 POSTs to the Direct Integration, which then effectively POSTs the
 results back to this URL your webserver, where you can display the
 transaction outcome.
@@ -264,15 +264,15 @@ part message uniquely; if not provided, the Gateway will assign a unique
 id to each part. The Content-Id HTTP header is returned in the response.
 The Gateway will not validate the uniqueness of any id provided. After
 the mandatory Content-type and the optional *Content-Id* header, two
-carriage return/line feed pairs must follow (i.e. *\r\n\r\n*). Any
+carriage return/line feed pairs must follow (i.e. *\\r\\n\\r\\n*). Any
 deviation from this structure might lead to the part being rejected or
 incorrectly interpreted. The part request payload, formatted as a
 regular HTTP URL encoded request, must follow the two-line breaks
 directly.
 
 To reduce the size of large batch requests, the Gateway supports
-compression using a Content-Encoding HTTP header with either a ‘gzip’ or
-‘x-gzip’ value. This header can be provided in the main request or in
+compression using a Content-Encoding HTTP header with either a 'gzip' or
+'x-gzip' value. This header can be provided in the main request or in
 the part request or both.
 
 An Authorization HTTP header can be used in the request to provide the
@@ -292,7 +292,7 @@ the response will contain an X-P3-Token HTTP header containing an
 authentication token that can be sent in future requests instead of the
 username and password. The authentication token has a limited life span,
 but each future request will return a new token and thus effectively
-rejuvenate the token’s life.
+rejuvenate the token's life.
 
 Like the parts in the request, each response part contains a HTTP
 response, including headers and body. Each response part is preceded by
@@ -301,7 +301,7 @@ X-Transaction-ID HTTP header is added containing the requests
 transaction id together with an X-Transaction-Response HTTP header
 containing a textual description of the transaction processing status.
 
-*  
+*\
 *
 
 *The Gateway will not process the transactions immediately but will
@@ -318,7 +318,7 @@ HTTP header.
 An Authorization HTTP header must be provided in the status request,
 containing either the username and password of a Gateway Merchant
 Management System user account or an authentication token returned in
-the batch submission response’s X-P3-Token HTTP header. If a valid
+the batch submission response's X-P3-Token HTTP header. If a valid
 username and password or a valid token is provided, then the response
 will be an updated version of the initial submission response providing
 the current status of each transaction. The response will only contain
@@ -337,8 +337,8 @@ that you perform a limited number of attempts with an increasing delay
 between each attempt.
 
 If the Gateway is unavailable during a scheduled maintenance period, you
-will receive a HTTP status code of 503 ‘Service Temporarily
-Unavailable’. In this situation, you should retry the transaction after
+will receive a HTTP status code of 503 'Service Temporarily
+Unavailable'. In this situation, you should retry the transaction after
 the scheduled maintenance period has expired. You will be notified of
 the times and durations of any such scheduled maintenance periods in
 advance, by email, and given a time when transactions can be
@@ -347,18 +347,20 @@ reattempted.
 If you are experiencing these errors, then we recommend you consider the
 following steps as appropriate for the integration method being used:
 
-- Ensure the request is being sent to HTTPS and not HTTP. HTTP is not
-  supported and is not redirected.
+-   Ensure the request is being sent to HTTPS and not HTTP. HTTP is not
+    supported and is not redirected.
 
-- Send transactions sequentially rather than concurrently.
+-   Send transactions sequentially rather than concurrently.
 
-- Configure your integration code with try/catch loops around individual
-  transactions to determine whether they were successful or not and
-  retry if required, based on the return code or HTTP status returned.
+-   Configure your integration code with try/catch loops around
+    individual transactions to determine whether they were successful or
+    not and retry if required, based on the return code or HTTP status
+    returned.
 
-- Configure the integration so that if one transaction fails, the entire
-  batch does not stop at that point – i.e. log the failure to be checked
-  and then skip to the next transaction rather than stopping entirely.
+-   Configure the integration so that if one transaction fails, the
+    entire batch does not stop at that point -- i.e. log the failure to
+    be checked and then skip to the next transaction rather than
+    stopping entirely.
 
 ### Redirect URL
 
@@ -366,13 +368,13 @@ The **redirectURL** request field is used to provide the URL of a
 webpage on your server.
 
 When provided, the Gateway will respond with a HTML page designed to
-redirect the Customer’s browser to the URL provided, using a HTTP POST
+redirect the Customer's browser to the URL provided, using a HTTP POST
 request containing the URL encoded response.
 
 For the Hosted Integration, this will redirect the Customer from the
 Hosted Payment Page back to this URL on your website.
 
-For the Direct Integration, this allows you to collect the Cardholder’s
+For the Direct Integration, this allows you to collect the Cardholder's
 payment details on your own server using a HTML form that POSTs to the
 Direct Integration. which then effectively POSTs the results back to
 this URL on your webserver, where you can display the transaction
@@ -409,28 +411,28 @@ values are records or arrays of records.
 Unless otherwise stated, numerical values are whole integer values with
 no decimal points. Textual values should use the UTF-8 character set and
 will be automatically truncated if too long, unless stated otherwise in
-the field’s description. Textual values may be transliterated[^1] when
+the field's description. Textual values may be transliterated[^1] when
 sending to third parties such as Acquirers but the original value is
 stored by Gateway and displayed in the Merchant Management System.
 
 Field values should use the following formats unless otherwise stated in
-the field’s description:
+the field's description:
 
 | **Field Type**         | **Value Format**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Monetary Amounts**   | Either major currency units by providing a value that includes a single decimal point such as ’10.99’; or in minor currency units by providing a value that contains no decimal points such as ‘1099’.                                                                                                                                                                                                                                                                                           |
-| **Timestamps**         | Date in the format ‘YYYY-MM-DD HH:MM:SS’                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| **Dates**              | Date in the format ‘YYYY-MM-DD’                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|--------------------|----------------------------------------------------|
+| **Monetary Amounts**   | Either major currency units by providing a value that includes a single decimal point such as '10.99'; or in minor currency units by providing a value that contains no decimal points such as '1099'.                                                                                                                                                                                                                                                                                           |
+| **Timestamps**         | Date in the format 'YYYY-MM-DD HH:MM:SS'                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Dates**              | Date in the format 'YYYY-MM-DD'                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **Country Codes**      | Either the ISO-3166-1 2-letter, 3-letter or 3-digit code.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **Currency Codes**     | Either the ISO-4217 3-letter or 3-digit code.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| **Records**            | Records can be provided using the *\[XX\]* notation, where *XX* is the record’s field name (sub-field). Records can be multi-dimensional or be sequentially indexed. For example: to send a value for the sub-field *Y* in the integration field *X,* use the field name *X\[Y\]*; however, to send a value for the sub-field *Y* in the fourth record for integration field *X,* then use the field name *X\[4\]\[Y\]* etc. Boolean values must be sent as ‘true’ or ‘false’ as detailed below. |
-| **Serialised Records** | Records can be sent as a JSON or URL serialised string. The first character of the serialised string determines its format: ‘{‘ indicates JSON format and anything else is assumed to be application/x-www-form-urlencoded format with any boolean values sent as ‘true’ or ‘false’ as detailed below.                                                                                                                                                                                           |
+| **Records**            | Records can be provided using the *\[XX\]* notation, where *XX* is the record's field name (sub-field). Records can be multi-dimensional or be sequentially indexed. For example: to send a value for the sub-field *Y* in the integration field *X,* use the field name *X\[Y\]*; however, to send a value for the sub-field *Y* in the fourth record for integration field *X,* then use the field name *X\[4\]\[Y\]* etc. Boolean values must be sent as 'true' or 'false' as detailed below. |
+| **Serialised Records** | Records can be sent as a JSON or URL serialised string. The first character of the serialised string determines its format: '{' indicates JSON format and anything else is assumed to be application/x-www-form-urlencoded format with any boolean values sent as 'true' or 'false' as detailed below.                                                                                                                                                                                           |
 
 Note: Nested records are useful when posting sub-fields direct from a
 HTML FORM. However, unlike the main integration fields, a nested
-record’s sub-fields are not sorted when constructing the signature and
+record's sub-fields are not sorted when constructing the signature and
 are processed in the order received. Serialised records can overcome any
-problems caused by a nested record’s fields being received in a
+problems caused by a nested record's fields being received in a
 different order to that used when generating the signature.
 
 Boolean value cannot be represented using
@@ -438,7 +440,7 @@ application/x-www-form-urlencoded and are therefore avoid where
 possible. However, some nested records may require the passing of
 boolean values where the data is sent to or originates from an external
 provider. In such circumstances any nested records boolean values must
-be url encoded as the strings ‘true’ and ‘false’ and not ‘1’ and ‘0’. If
+be url encoded as the strings 'true' and 'false' and not '1' and '0'. If
 the nested records are being sent in JSON serialised format, then normal
 JSON boolean types can be used.
 
@@ -460,7 +462,7 @@ error response is returned.
 
 You can configure a signing secret phrase for each Merchant Account
 using the Merchant Management System (MMS). When configured, each
-request will need to be ‘signed’ by providing a **signature** field
+request will need to be 'signed' by providing a **signature** field
 containing a hash generated from the combination of the serialised
 request and this signing secret phrase. On receipt, the Gateway will
 then re-generate the hash and compare it with the one sent. If the two
@@ -502,7 +504,7 @@ supports the basic payment actions.
 
 This will create a new transaction and attempt to seek authorisation for
 a sale from the Acquirer. A successful authorisation will reserve the
-funds on the Cardholder’s account until the transaction is settled.
+funds on the Cardholder's account until the transaction is settled.
 
 The **captureDelay** field can be used to state whether the transaction
 should be authorised only and settled at a later date. For more details
@@ -512,7 +514,7 @@ on delayed capture, refer to appendix A-10.
 
 This will create a new transaction and attempt to verify that the card
 account exists with the Acquirer. The transaction will result in no
-transfer of funds and no hold on any funds on the Cardholder’s account.
+transfer of funds and no hold on any funds on the Cardholder's account.
 It cannot be captured and will not be settled. The transaction
 **amount** must always be zero.
 
@@ -525,7 +527,7 @@ to validate that it has sufficient funds.
 This will create a new transaction and attempt to seek authorisation for
 a sale from the Acquirer. If authorisation is approved, then it is
 immediately voided (where possible) so that no funds are reserved on the
-Cardholder’s account. The transaction will result in no transfer of
+Cardholder's account. The transaction will result in no transfer of
 funds. It cannot be captured and will not be settled.
 
 This transaction type can be used to check whether funds are available
@@ -590,7 +592,7 @@ request field, preventing it from being settled. It can only be
 performed on transactions, which have been authorised but not yet
 settled, and it is not reversible. Depending on the Acquirer it may not
 reverse the authorisation and release any reserved funds on the
-Cardholder’s account. In such cases, authorisation will be left to
+Cardholder's account. In such cases, authorisation will be left to
 expire as normal releasing the reserved funds. This may take up to 30
 days from the date of authorisation.
 
@@ -1023,7 +1025,7 @@ use and are supplied for additional information only.
 The response is also POSTed to any URL provided by optional
 **callbackURL**.
 
-####### Integration Libraries
+####### Integration Libraries {#integration-libraries-1 .Style-Heading-7-+-(Latin)-Helvetica-16-pt-Bold-Custom-Color(RGB(...}
 
 We can provide a range of libraries to help you to integrate with the
 Gateway.
